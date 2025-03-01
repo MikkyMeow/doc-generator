@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { EditorPage } from "./components/pages/EditorPage";
 
 export const router = createBrowserRouter([
     {
@@ -6,11 +7,7 @@ export const router = createBrowserRouter([
         element: <h2>Main</h2>
     },
     {
-        path: '/about',
-        element: <h2>About</h2>
-    },
-    {
-        path: '/new',
-        element: <h2>News</h2>
+        path: '/editor',
+        element: <EditorPage />
     },
 ])
