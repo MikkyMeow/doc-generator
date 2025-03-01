@@ -1,23 +1,38 @@
-import { TextField } from "@mui/material"
-import useLS from "hooks/useLS";
+import { Paper } from "components/widgets/Paper"
+import { useEffect } from "react"
+import { Cursor } from "./Cursor"
+import { useGlobalStore } from "store/useGlobalStore"
 
 export const EditorPage = () => {
-    const [name, setName] = useLS<string>("name", "");
+    const { content, setContent, cursor, setCursor } = useGlobalStore();
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setName(event.target.value);
-    };
+    const handleKeyPress = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            const content = JSON.parse(localStorage.getItem('content')!) || [];
+            const cursor = JSON.parse(localStorage.getItem('cursor')!) || '';
+            setContent([...content, { text: cursor }])
+            setCursor('')
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyPress)
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress)
+        }
+    }, [])
+
 
     return (
         <div>
             <h2>EditorPage</h2>
-            <h4>name: {name}</h4>
-            <TextField
-                type="text"
-                value={name}
-                onChange={handleChange}
-                placeholder="Введите ваше имя"
-            />
+            <hr />
+            <Paper>
+                {content && content.map(el => (
+                    <p key={Math.random()}>{el.text}</p>
+                ))}
+                <Cursor />
+            </Paper>
         </div>
 
     )

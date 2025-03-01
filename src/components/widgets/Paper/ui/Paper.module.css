@@ -1,0 +1,9 @@
+.root {
+    width: 210mm;
+    height: 297mm;
+    max-width: 210mm;
+    max-height: 297mm;
+    margin: 0 auto 10mm;
+    overflow: hidden;
+    position: relative;
+}
